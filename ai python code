@@ -1,0 +1,77 @@
+import streamlit as st
+
+st.title("AI Interview Trainer")
+
+st.write("Welcome!")
+
+question = "Tell me about yourself."
+
+st.subheader(question)
+
+answer = st.text_area(
+    "Write your answer"
+)
+
+if st.button("Submit"):
+    st.success("Answer submitted!")
+
+
+it started with this, slowly to develop each thing
+
+import streamlit as st
+import random
+
+st.title("🎤 AI Interview Trainer")
+
+questions = [
+    "Tell me about yourself",
+    "Why should we hire you?",
+    "What are your strengths?",
+    "Describe a difficult challenge",
+    "Explain one project you built"
+]
+
+if "question" not in st.session_state:
+    st.session_state.question = random.choice(
+        questions
+    )
+
+st.subheader(
+    st.session_state.question
+)
+
+answer = st.text_area(
+    "Your Answer"
+)
+
+if st.button("Submit"):
+    words = len(answer.split())
+
+    score = min(words, 100)
+
+    st.metric("Score", score)
+
+    st.success("Answer Submitted!")
+
+    st.write(f"Word Count: {words}")
+
+    if words < 20:
+        st.warning("Answer needs more detail.")
+
+    elif words < 50:
+        st.info("Good. Add examples.")
+
+    else:
+        st.success("Strong answer.")
+
+if st.button(
+    "Next Question"
+):
+
+    st.session_state.question = (
+        random.choice(
+            questions
+        )
+    )
+
+    st.rerun()
